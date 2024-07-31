@@ -1,0 +1,297 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anime Recommendation System</h1>
+        <form action="/recommend" method="POST">
+            <input type="text" name="anime_name" placeholder="Enter anime name" required>
+            <input type="submit" value="Get Recommendations">
+        </form>
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .container {
+            margin-top: 50px;
+            position: relative; /* Add this line to position dropdown relative to this container */
+            display: inline-block; /* Add this line to ensure dropdown is properly aligned */
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .recommendations {
+            margin-top: 20px;
+        }
+        .recommendation {
+            background: rgba(0, 0, 0, 0.5);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%; /* Position it directly below the input box */
+            left: 0;
+            width: 100%; /* Ensure it matches the width of the input box */
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #000;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            box-sizing: border-box; /* Include padding and border in element’s total width and height */
+        }
+        .autocomplete-suggestion {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .autocomplete-suggestion:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anime Recommendation System</h1>
+        <form action="/recommend" method="POST">
+            <input type="text" id="anime_name" name="anime_name" placeholder="Enter anime name" required>
+            <input type="submit" value="Get Recommendations">
+        </form>
+        <div id="autocomplete-suggestions" class="autocomplete-suggestions"></div>
+    </div>
+
+    <script>
+        document.getElementById('anime_name').addEventListener('input', function() {
+            const query = this.value;
+            const suggestionsDiv = document.getElementById('autocomplete-suggestions');
+            if (query.length > 0) {
+                fetch(`/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        suggestionsDiv.innerHTML = '';
+                        if (data.length > 0) {
+                            data.forEach(name => {
+                                const div = document.createElement('div');
+                                div.className = 'autocomplete-suggestion';
+                                div.textContent = name;
+                                div.addEventListener('click', () => {
+                                    document.getElementById('anime_name').value = name;
+                                    suggestionsDiv.innerHTML = '';
+                                });
+                                suggestionsDiv.appendChild(div);
+                            });
+                            suggestionsDiv.style.display = 'block';
+                        } else {
+                            suggestionsDiv.style.display = 'none';
+                        }
+                    });
+            } else {
+                suggestionsDiv.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            const suggestionsDiv = document.getElementById('autocomplete-suggestions');
+            if (!suggestionsDiv.contains(event.target) && event.target.id !== 'anime_name') {
+                suggestionsDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .container {
+            margin-top: 50px;
+            position: relative; /* Position relative to align the dropdown correctly */
+            display: inline-block; /* Ensure the dropdown aligns with the input */
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .recommendations {
+            margin-top: 20px;
+        }
+        .recommendation {
+            background: rgba(0, 0, 0, 0.5);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%; /* Position it directly below the input box */
+            left: 0;
+            width: 100%; /* Match the width of the input box */
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #000;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            box-sizing: border-box; /* Include padding and border in the total width and height */
+        }
+        .autocomplete-suggestion {
+            padding: 10px;
+            cursor: pointer;
+            text-align: left; /* Align text to the left */
+        }
+        .autocomplete-suggestion:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anime Recommendation System</h1>
+        <form action="/recommend" method="POST">
+            <input type="text" id="anime_name" name="anime_name" placeholder="Enter anime name" required>
+            <input type="submit" value="Get Recommendations">
+        </form>
+        <div id="autocomplete-suggestions" class="autocomplete-suggestions"></div>
+    </div>
+
+    <script>
+        document.getElementById('anime_name').addEventListener('input', function() {
+            const query = this.value;
+            const suggestionsDiv = document.getElementById('autocomplete-suggestions');
+            if (query.length > 0) {
+                fetch(`/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        suggestionsDiv.innerHTML = '';
+                        if (data.length > 0) {
+                            data.forEach(name => {
+                                const div = document.createElement('div');
+                                div.className = 'autocomplete-suggestion';
+                                div.textContent = name;
+                                div.addEventListener('click', () => {
+                                    document.getElementById('anime_name').value = name;
+                                    suggestionsDiv.innerHTML = '';
+                                });
+                                suggestionsDiv.appendChild(div);
+                            });
+                            suggestionsDiv.style.display = 'block';
+                        } else {
+                            suggestionsDiv.style.display = 'none';
+                        }
+                    });
+            } else {
+                suggestionsDiv.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            const suggestionsDiv = document.getElementById('autocomplete-suggestions');
+            if (!suggestionsDiv.contains(event.target) && event.target.id !== 'anime_name') {
+                suggestionsDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

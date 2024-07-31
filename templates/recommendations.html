@@ -1,0 +1,181 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .recommendations {
+            margin-top: 20px;
+        }
+        .recommendation {
+            background: rgba(0, 0, 0, 0.5);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-button">
+        <a href="{{ url_for('home') }}"><button>Go Back to Home</button></a>
+    </div>
+    <div class="container">
+        <h1>Recommendations for "{{ anime_name }}"</h1>
+        {% if recommendations %}
+            <div class="recommendations">
+                {% for anime in recommendations %}
+                <div class="recommendation">
+                    <h3>{{ anime.Name }}</h3>
+                    <p>Genres: {{ anime.Genres }}</p>
+                    <p>Episodes: {{ anime.Episodes }}</p>
+                    <p>Score: {{ anime.Score }}</p>
+                    <p>Type: {{ anime.Type }}</p>
+                    <p>Rating: {{ anime.Rating }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="recommendations">
+                <h2>No recommendations found for "{{ anime_name }}"</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("{{ url_for('static', filename='851039.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .recommendations {
+            margin-top: 20px;
+        }
+        .recommendation {
+            background: rgba(0, 0, 0, 0.5);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .sort-container {
+            margin-top: 20px;
+        }
+        select {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-button">
+        <a href="{{ url_for('home') }}"><button>Go Back to Home</button></a>
+    </div>
+    <div class="container">
+        <h1>Recommendations for "{{ anime_name }}"</h1>
+        <div class="sort-container">
+            <form method="get" action="{{ url_for('show_recommendations', anime_name=anime_name) }}">
+                <label for="sort">Sort by:</label>
+                <select name="sort_by" id="sort">
+                    <option value="Score" {% if sort_by == 'Score' %}selected{% endif %}>Score</option>
+                    <option value="Episodes" {% if sort_by == 'Episodes' %}selected{% endif %}>Episodes</option>
+                </select>
+                <label for="order">Order:</label>
+                <select name="order" id="order">
+                    <option value="asc" {% if order == 'asc' %}selected{% endif %}>Ascending</option>
+                    <option value="desc" {% if order == 'desc' %}selected{% endif %}>Descending</option>
+                </select>
+                <label for="filter_genre">Filter by Genre:</label>
+                <select name="filter_genre" id="filter_genre">
+                    <option value="" {% if not filter_genre %}selected{% endif %}>All</option>
+                    {% for genre in available_genres %}
+                    <option value="{{ genre }}" {% if filter_genre == genre %}selected{% endif %}>{{ genre }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Apply</button>
+            </form>
+        </div>
+        {% if recommendations %}
+            <div class="recommendations" id="recommendations">
+                {% for anime in recommendations %}
+                <div class="recommendation">
+                    <h3><a href="{{ anime.Links }}" target="_blank" style="color: #fff; text-decoration: none;">{{anime.Name}}</a></h3>
+                    <!-- <h3>{{anime.Name}}</h3> -->
+                    <p>Genres: {{ anime.Genres }}</p>
+                    <p>Episodes: {{ anime.Episodes }}</p>
+                    <p>Score: {{ anime.Score }}</p>
+                    <p>Type: {{ anime.Type }}</p>
+                    <p>Rating: {{ anime.Rating }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="recommendations">
+                <h2>No recommendations found for "{{ anime_name }}"</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
